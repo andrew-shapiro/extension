@@ -9,8 +9,10 @@
         "main.ts",
         "README.md",
         "assets.json",
-        "custom.ts",
-        "a-star.ts"
+        "path-following.ts",
+        "a-star.ts",
+        "sight.ts",
+        "sight_range.ts"
     ],
     "testFiles": [
         "test.ts"
