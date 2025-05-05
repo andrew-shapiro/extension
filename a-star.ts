@@ -235,4 +235,35 @@ namespace custom {
         const img = tm.getTileImage(tm.getTileIndex(loc.col, loc.row))
         return img.equals(onTilesOf);
     }
+
+    //%block="can $sprite=variables_get(sprite) see $target=variables_get(otherSprite) in range $range ≈ direction $sightDirection degrees, $sightRange degrees"
+    //%blockid=spritesightisinsightcone
+    //% inlineInputMode=inline
+    //%group='Computer Vision'
+    export function isInSightCone(sprite: Sprite, target: Sprite, range: number, sightDirection: number, sightRange: number) {
+        if (!sight.distanceInRange(sprite, target, range)) {
+            return false
+        }
+
+        if (sight.isWallBetween(sprite, target)) {
+            return false
+        }
+
+        let angle = Math.atan2(target.y - sprite.y, target.x - sprite.x)
+
+        angle = ((angle / Math.PI * 180) + 360) % 360
+        sightDirection = (sightDirection + 360) % 360
+        return Math.abs(angle - sightDirection) < sightRange
+    }
+
+    //%block="can $sprite=variables_get(sprite) see $target=variables_get(otherSprite) in circular range %range"
+    //%blockid=spritesightisinsight 
+    //%group='Computer Vision'
+    export function isInSight(sprite: Sprite, target: Sprite, range: number) {
+        if (!sight.distanceInRange(sprite, target, range)) {
+            return false
+        }
+
+        return !sight.isWallBetween(sprite, target)
+    }
 }
